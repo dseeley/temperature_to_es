@@ -12,7 +12,7 @@ Configure the sensor as:
 
 ![raspi_ds18b20](https://user-images.githubusercontent.com/5869991/27763696-60742c5a-5e80-11e7-93b8-d1a570704689.jpg)
 
-Alternatively, pre-built versions are available on ebay, which makes this a lot easier:
+Alternatively, pre-built versions are available on ebay, which makes this a lot easier.  Search for `"ds18b20 module"`:
 
 ![ds18b20_built](https://user-images.githubusercontent.com/5869991/27763881-2a9513ca-5e84-11e7-98b2-c13a46b4e3d3.png)
 
