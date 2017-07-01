@@ -1,0 +1,6 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+
+[all]
+10.4.0.240  es_host=10.4.0.7

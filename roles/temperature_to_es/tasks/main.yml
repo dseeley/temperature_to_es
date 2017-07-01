@@ -1,0 +1,50 @@
+---
+
+- name: pip install elasticsearch
+  pip:
+    name: elasticsearch
+
+- name: add dtoverlay to config.txt
+  lineinfile:
+    path: "/boot/config.txt"
+    insertafter: "dtoverlay="
+    line: "dtoverlay=w1-gpio"
+  notify:
+    - reboot
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "2755"
+  with_items:
+    - "{{inst_home}}"
+
+
+- name: Copy temperature_to_es.py
+  copy:
+    src: "opt/temperature_to_es/temperature_to_es.py"
+    dest: "{{inst_home}}/temperature_to_es.py"
+    mode: 0655
+
+- name: Copy config.py
+  template:
+    src: "opt/temperature_to_es/config.py.j2"
+    dest: "{{inst_home}}/config.py"
+    mode: 0644
+    force: yes
+
+
+- name: Copy Systemd Files
+  template:
+    src: "usr/lib/systemd/system/{{item}}.j2"
+    dest: "/usr/lib/systemd/system/{{item}}"
+    mode: 0644
+    force: yes
+  with_items:
+    - "temperature_to_es.service"
+    - "temperature_to_es.timer"
+  notify:
+    - reload systemd configuration
+    - restart temperature_to_es.timer
+

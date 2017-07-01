@@ -1,0 +1,7 @@
+---
+
+- name: Install temperature_to_es
+  hosts: all
+  gather_facts: False
+  roles:
+    - temperature_to_es

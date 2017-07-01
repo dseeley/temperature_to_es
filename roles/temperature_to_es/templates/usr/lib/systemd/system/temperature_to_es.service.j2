@@ -1,0 +1,9 @@
+[Unit]
+Description=temperature_to_es service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python {{ inst_home }}/temperature_to_es.py
+
+[Install]
+WantedBy=multi-user.target

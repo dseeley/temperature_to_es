@@ -1,0 +1,26 @@
+---
+
+- name: reboot
+  shell: sleep 2 && shutdown -r now "Ansible package updates triggered"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  notify: wait reboot
+
+- name: wait reboot
+  become: false
+  local_action: wait_for host="{{ inventory_hostname }}" port=22 timeout=300 delay=10
+
+
+# Need to do this when we manually add systemd service files to the filesystem
+- name: reload systemd configuration
+  command: systemctl daemon-reload
+
+# Restart elasticsearch and ensure it is enabled
+- name: restart temperature_to_es.timer
+  service:
+    name: temperature_to_es.timer
+    state: restarted
+    enabled: yes
+  when: restart_on_change or start_service
+

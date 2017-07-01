@@ -1,0 +1,9 @@
+[Unit]
+Description=temperature_to_es timer
+
+[Timer]
+OnCalendar=*:0/{{ frequency_mins }}
+AccuracySec=100ms
+
+[Install]
+WantedBy=timers.target
