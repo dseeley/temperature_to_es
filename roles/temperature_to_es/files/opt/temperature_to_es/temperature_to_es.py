@@ -47,7 +47,10 @@ def main():
             } \
         })
 
-    es.index(index=config.config['es_index'], doc_type="temp", body={"timestamp": datetime.datetime.now(), "temp_c": temp_c})
+    tz = str.format('{0:+06.2f}', -float(time.timezone) / 3600).replace('.', ':')
+    isodate = str(datetime.datetime.utcnow().isoformat()) + tz
+
+    es.index(index=config.config['es_index'], doc_type="temp", body={"timestamp": isodate, "temp_c": temp_c})
 
 
 if __name__ == "__main__":
